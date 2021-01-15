@@ -5,12 +5,13 @@ import tensorflow as tf
 from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 import numpy as np
+import argparse
 
 
 # Dataset
-batch_size = 1024  # size of a minibatch
+batch_size = 1024  # size of a minibatch ~5.9GB
 # Training
-epochs = 50
+epochs = 100
 noise_dim = 100
 # Checkpoints
 checkpoint_dir = './training_checkpoints'
@@ -176,9 +177,13 @@ def play():
 
 
 def main():
-    dataset = get_dataset()
-    train(dataset, epochs)
-    #play()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', required=False, default=False, help='Train the model')
+    args = parser.parse_args()
+    if args.train:
+        dataset = get_dataset()
+        train(dataset, epochs)
+    play()
 
 
 if __name__ == "__main__":
